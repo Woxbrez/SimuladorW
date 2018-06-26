@@ -15,25 +15,23 @@
 			style="margin-bottom:20px">
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 				<p:outputLabel for="forma" value="Forma de Pagamento:" />
-
-				<p:selectOneRadio id="forma" value="#{radioView.console}">
+				<p:selectOneRadio id="forma" value="#{indexBean.formaDePagamento}">
 					<f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" />
 					<f:selectItem itemLabel="Cartão" itemValue="Cartão" />
 				</p:selectOneRadio>
-
-				<p:commandButton value="Formular" id="form"
-					actionListener="#{buttonView.buttonAction}" />
-
+				<h:commandButton value="Formular " id="form"
+					actionListener="#{indexBean.atualiza}" />
 			</h:panelGrid>
 		</p:panel>
 
-		<p:panel id="dados" header="Dados" style="margin-bottom:20px">
+		<p:panel id="dadosCredito" header="Dados " style="margin-bottom:20px"
+			rendered="#{indexBean.opcCartao}">
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 				<p:outputLabel value="Valor que o cliente quer:" />
-				<p:inputText value="00,00" />
+				<p:inputText value="#{creditoBean.valor}" />
 
 				<p:outputLabel for="parcelas" value="Comprador paga em:" />
-				<p:selectOneMenu id="parcelas" value="#{radioView.console}">
+				<p:selectOneMenu id="parcelas" value="#{creditoBean.parcelas}">
 					<f:selectItem itemLabel="1 parcela" itemValue="1" />
 					<f:selectItem itemLabel="2 parcelas" itemValue="2" />
 					<f:selectItem itemLabel="3 parcelas" itemValue="3" />
@@ -48,16 +46,69 @@
 					<f:selectItem itemLabel="12 parcelas" itemValue="12" />
 				</p:selectOneMenu>
 
+				<p:outputLabel value="Tipo de parcelamento: " />
+				<p:outputLabel value="Comprador" />
+
 				<p:commandButton value="Recalcular" id="recalcular"
-					actionListener="#{buttonView.buttonAction}" />
+					actionListener="#{indexBean.atualiza}" />
 			</h:panelGrid>
 		</p:panel>
 
-		<p:panel id="simulador" header="Simulador" style="margin-bottom:20px">
+		<p:panel id="dadosDinheiro" header="Dados " style="margin-bottom:20px"
+			rendered="#{indexBean.opcDinheiro}">
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<p:outputLabel value="Valor que o cliente quer:" />
+				<p:inputText value="#{dinheiroBean.valor}" />
+
+				<p:outputLabel for="taxa" value="Taxa de Juros:" />
+				<p:selectOneRadio id="taxa" value="#{dinheiroBean.porcLucro}">
+					<f:selectItem itemLabel="20%" itemValue="0.25" />
+					<f:selectItem itemLabel="25%" itemValue="0.20" />
+				</p:selectOneRadio>
+
+				<p:outputLabel for="parcelasD" value="Comprador paga em:" />
+				<p:selectOneMenu id="parcelasD" value="#{dinheiroBean.parcelas}">
+					<f:selectItem itemLabel="1 parcela" itemValue="1" />
+					<f:selectItem itemLabel="2 parcelas" itemValue="2" />
+					<f:selectItem itemLabel="3 parcelas" itemValue="3" />
+					<f:selectItem itemLabel="4 parcelas" itemValue="4" />
+					<f:selectItem itemLabel="5 parcelas" itemValue="5" />
+					<f:selectItem itemLabel="6 parcelas" itemValue="6" />
+					<f:selectItem itemLabel="7 parcelas" itemValue="7" />
+					<f:selectItem itemLabel="8 parcelas" itemValue="8" />
+					<f:selectItem itemLabel="9 parcelas" itemValue="9" />
+					<f:selectItem itemLabel="10 parcelas" itemValue="10" />
+					<f:selectItem itemLabel="11 parcelas" itemValue="11" />
+					<f:selectItem itemLabel="12 parcelas" itemValue="12" />
+				</p:selectOneMenu>
+
+				<p:commandButton value="Recalcular" id="recalcularD"
+					actionListener="#{indexBean.atualiza}" />
+			</h:panelGrid>
+		</p:panel>
+
+		<p:panel id="resultadoCredito" header="Resultado"
+			style="margin-bottom:20px" rendered="#{indexBean.opcCartao}">
 			<p:outputLabel value="Veja abaixo o resultado de sua simulação:" />
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 				<p:outputLabel value="Valor de Venda:" />
 				<p:outputLabel value="00,00" />
+
+				<p:outputLabel value="Custo Final:" />
+				<p:outputLabel value="00,00" />
+
+				<p:outputLabel value="0 parcelas de" />
+				<p:outputLabel value="R$ 00,00" />
+
+				<p:outputLabel value="Lucro: " />
+				<p:outputLabel value="R$ 00,00" />
+			</h:panelGrid>
+		</p:panel>
+		
+		<p:panel id="resultadoDinheiro" header="Resultado"
+			style="margin-bottom:20px" rendered="#{indexBean.opcDinheiro}">
+			<p:outputLabel value="Veja abaixo o resultado de sua simulação:" />
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
 				<p:outputLabel value="Custo Final:" />
 				<p:outputLabel value="00,00" />

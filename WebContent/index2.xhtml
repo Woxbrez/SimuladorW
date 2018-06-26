@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Simulador</title>
+</h:head>
+
+<h:body>
+	<h:form>
+		<p:panel id="formular" header="Forma de Pagamento"
+			style="margin-bottom:20px">
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<p:outputLabel for="forma" value="Forma de Pagamento:" />
+
+				<p:selectOneRadio id="forma" value="#{indexBean.opcao}">
+					<f:selectItem itemLabel="Dinheiro" itemValue="Dinheiro" />
+					<f:selectItem itemLabel="Cartão" itemValue="Cartão" />
+				</p:selectOneRadio>
+				
+				 <h:outputText value="#{indexBean.opcao}" />
+
+				<p:commandButton value="Formular " id="form"
+					actionListener="#{indexBean.redireciona}" />
+
+			</h:panelGrid>
+		</p:panel>
+
+
+		<p:panel id="dados" header="Dados" style="margin-bottom:20px">
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<p:outputLabel value="Valor que o cliente quer:" />
+				<p:inputText value="00,00" />
+
+				<p:outputLabel for="parcelas" value="Comprador paga em:" />
+				<p:selectOneMenu id="parcelas" value="#{radioView.console}">
+					<f:selectItem itemLabel="1 parcela" itemValue="1" />
+					<f:selectItem itemLabel="2 parcelas" itemValue="2" />
+					<f:selectItem itemLabel="3 parcelas" itemValue="3" />
+					<f:selectItem itemLabel="4 parcelas" itemValue="4" />
+					<f:selectItem itemLabel="5 parcelas" itemValue="5" />
+					<f:selectItem itemLabel="6 parcelas" itemValue="6" />
+					<f:selectItem itemLabel="7 parcelas" itemValue="7" />
+					<f:selectItem itemLabel="8 parcelas" itemValue="8" />
+					<f:selectItem itemLabel="9 parcelas" itemValue="9" />
+					<f:selectItem itemLabel="10 parcelas" itemValue="10" />
+					<f:selectItem itemLabel="11 parcelas" itemValue="11" />
+					<f:selectItem itemLabel="12 parcelas" itemValue="12" />
+				</p:selectOneMenu>
+
+				<p:commandButton value="Recalcular" id="recalcular"
+					actionListener="#{buttonView.buttonAction}" />
+			</h:panelGrid>
+		</p:panel>
+
+		<p:panel id="simulador" header="Simulador" style="margin-bottom:20px">
+			<p:outputLabel value="Veja abaixo o resultado de sua simulação:" />
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				<p:outputLabel value="Valor de Venda:" />
+				<p:outputLabel value="00,00" />
+
+				<p:outputLabel value="Custo Final:" />
+				<p:outputLabel value="00,00" />
+
+				<p:outputLabel value="0 parcelas de" />
+				<p:outputLabel value="R$ 00,00" />
+
+				<p:outputLabel value="Lucro: " />
+				<p:outputLabel value="R$ 00,00" />
+			</h:panelGrid>
+		</p:panel>
+
+	</h:form>
+
+</h:body>
+
+
+</html>
