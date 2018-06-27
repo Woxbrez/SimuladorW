@@ -7,12 +7,17 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class CreditoBean {
 
-	private double valor = 0;
-	private int parcelas = 1;
+	private double valor;
+	private int parcelas;
 	private double porcLucro = 0.1;
+	private double custoFinal;
+	private double valorParcela;
+	private double valorLucro;
+	private double valorVenda;
+	private double valorDescontado;
 	private double[] taxaIntermediacao = new double[] { 0.07, 0.0499, 0.0559 };
-	private double[] taxaParcelamento = new double[] { 0, 0, 0.0409, 0.0541, 0.0670, 0.0796, 0.0920, 0.1041, 0.1161,
-			0.1278, 0.1392, 0.1505, 0.1615 };
+	private double[] taxaParcelamento = new double[] { 0, 0, 0.0451, 0.0604, 0.0759, 0.0915, 0.1072, 0.1231, 0.1392,
+			0.1554, 0.1717, 0.1882, 0.2048 };
 
 	public double getValor() {
 		return valor;
@@ -20,40 +25,6 @@ public class CreditoBean {
 
 	public void setValor(double valor) {
 		this.valor = valor;
-	}
-
-	public double retornaValorVenda() {
-		double valorVenda;
-		valorVenda = this.valor + (this.valor * this.porcLucro) + (this.valor * this.taxaIntermediacao[0]);
-		return valorVenda;
-	}
-
-	public double valorDescontado() {
-		double valorDescontado;
-		if (this.parcelas > 2) {
-			valorDescontado = (this.valor * this.taxaIntermediacao[2]);
-		} else {
-			valorDescontado = (this.valor * this.taxaIntermediacao[this.parcelas]);
-		}
-		return valorDescontado;
-	}
-
-	public double valorLucro() {
-		double lucro = this.retornaValorVenda() - this.valorDescontado() - this.valor;
-		return lucro;
-	}
-
-	public double retornaCustoFinal() {
-		double custoFinal;
-		custoFinal = this.retornaValorVenda() * this.taxaParcelamento[this.parcelas];
-		custoFinal = this.retornaValorVenda() + custoFinal;
-		return custoFinal;
-	}
-
-	public double valorParcela() {
-		double valorParcela;
-		valorParcela = this.retornaCustoFinal() / this.parcelas;
-		return valorParcela;
 	}
 
 	public int getParcelas() {
@@ -86,6 +57,82 @@ public class CreditoBean {
 
 	public void setTaxaParcelamento(double[] taxaParcelamento) {
 		this.taxaParcelamento = taxaParcelamento;
+	}
+
+	public double getCustoFinal() {
+		return custoFinal;
+	}
+
+	public void setCustoFinal(double custoFinal) {
+		this.custoFinal = custoFinal;
+	}
+
+	public double getValorParcela() {
+		return valorParcela;
+	}
+
+	public void setValorParcela(double valorParcela) {
+		this.valorParcela = valorParcela;
+	}
+
+	public double getValorLucro() {
+		return valorLucro;
+	}
+
+	public void setValorLucro(double valorLucro) {
+		this.valorLucro = valorLucro;
+	}
+
+	public double getValorVenda() {
+		return valorVenda;
+	}
+
+	public void setValorVenda(double valorVenda) {
+		this.valorVenda = valorVenda;
+	}
+
+	public double getValorDescontado() {
+		return valorDescontado;
+	}
+
+	public void setValorDescontado(double valorDescontado) {
+		this.valorDescontado = valorDescontado;
+	}
+
+	public double calculaValorDescontado() {
+		double valorDescontado;
+		if (this.parcelas > 2) {
+			valorDescontado = (this.valorVenda * this.taxaIntermediacao[2]);
+		} else {
+			valorDescontado = (this.valorVenda * this.taxaIntermediacao[this.parcelas]);
+		}
+		return valorDescontado;
+	}
+
+	public double calculaValorVenda() {
+		return (this.valor + (this.valor * this.porcLucro) + (this.valor * this.taxaIntermediacao[0]));
+	}
+
+	public double calculaCustoFinal() {
+		double custoFinal = this.valorVenda * (this.taxaParcelamento[this.parcelas]);
+		custoFinal = this.valorVenda + custoFinal;
+		return custoFinal;
+	}
+
+	public double calculaValorParcela() {
+		return (this.calculaCustoFinal() / this.parcelas);
+	}
+
+	public double calculaValorLucro() {
+		return (this.valorVenda - this.valorDescontado - this.valor);
+	}
+
+	public void calcula() {
+		this.valorVenda = this.calculaValorVenda();
+		this.custoFinal = this.calculaCustoFinal();
+		this.valorParcela = this.calculaValorParcela();
+		this.valorDescontado = this.calculaValorDescontado();
+		this.valorLucro = this.calculaValorLucro();
 	}
 
 }

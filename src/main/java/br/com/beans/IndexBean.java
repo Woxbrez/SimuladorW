@@ -6,7 +6,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 @ManagedBean(name = "indexBean")
 public class IndexBean {
-	private String formaDePagamento;
+	private String formaDePagamento = "Dinheiro";
 	private boolean opcDinheiro = false, opcCartao = false;
 
 	public void atualiza() {
