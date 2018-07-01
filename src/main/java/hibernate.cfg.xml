@@ -14,9 +14,7 @@
 		<property name="hbm2ddl.auto">update</property>
 		<property name="hibernate.temp.use_jdbc_metadata_defaults" >false</property>
 
-		<!-- Livro 
-		<mapping class="br.com.meuprojeto.bean.Livro" />
-		-->
+		<mapping class="br.com.entidades.Simulacoes" /> 
 
 	</session-factory>
 </hibernate-configuration>
