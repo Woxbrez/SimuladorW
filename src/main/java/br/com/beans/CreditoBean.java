@@ -3,6 +3,9 @@ package br.com.beans;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import br.com.crud.ImplementacaoCrud;
+import br.com.entidades.Simulacoes;
+
 @ManagedBean(name = "creditoBean")
 @SessionScoped
 public class CreditoBean {
@@ -18,7 +21,9 @@ public class CreditoBean {
 	private double[] taxaIntermediacao = new double[] { 0.07, 0.0499, 0.0559 };
 	private double[] taxaParcelamento = new double[] { 0, 0, 0.0451, 0.0604, 0.0759, 0.0915, 0.1072, 0.1231, 0.1392,
 			0.1554, 0.1717, 0.1882, 0.2048 };
-
+	private Simulacoes s = new Simulacoes();
+	ImplementacaoCrud<Simulacoes> c = new ImplementacaoCrud<Simulacoes>();
+	
 	public double getValor() {
 		return valor;
 	}
@@ -126,13 +131,22 @@ public class CreditoBean {
 	public double calculaValorLucro() {
 		return (this.valorVenda - this.valorDescontado - this.valor);
 	}
+	
+	public void salva() throws Exception {
+		s.setValor(this.valor);
+		s.setParcelas(this.parcelas);
+		s.setCustoFinal(this.custoFinal);
+		s.setValorParcela(this.valorParcela);
+		c.save(s);
+		s = new Simulacoes();
+	}
 
-	public void calcula() {
+	public void calcula() throws Exception {
 		this.valorVenda = this.calculaValorVenda();
 		this.custoFinal = this.calculaCustoFinal();
 		this.valorParcela = this.calculaValorParcela();
 		this.valorDescontado = this.calculaValorDescontado();
-		this.valorLucro = this.calculaValorLucro();
+		this.valorLucro = this.calculaValorLucro();	
 	}
 
 }

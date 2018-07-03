@@ -13,6 +13,7 @@
 		<property name="hibernate.format_sql">false</property>
 		<property name="hbm2ddl.auto">update</property>
 		<property name="hibernate.temp.use_jdbc_metadata_defaults" >false</property>
+		<property name="hibernate.current_session_context_class">thread</property>
 
 		<mapping class="br.com.entidades.Simulacoes" /> 
 
